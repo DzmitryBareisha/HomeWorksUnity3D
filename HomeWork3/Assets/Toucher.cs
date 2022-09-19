@@ -4,26 +4,20 @@ using UnityEngine;
 
 public class Toucher : MonoBehaviour
 {
-    //public float rotationSpeed = 0.4f;
-    //public Camera cam;
-    //public void Update()
-    //{
-    //    foreach (Touch touch in Input.touches)
-    //    {
-    //        Ray camRay = cam.ScreenPointToRay(touch.position);
-    //        RaycastHit raycastHit;
-    //        if (Physics.Raycast(camRay, out raycastHit, maxDistance 10)
-    //        {
-    //            if (touch.phase == TouchPhase.Began) 
-    //            {
-    //                transform.Rotate (xAngle touch.deltaPosition.y * rotationSpeed,
-    //                    yAngle -touch.deltaPosition.x*rotationSpeed, zAngle 0, relativeTo:Space.World);
-    //            }
-    //        }
-            
+       
+    // Start is called before the first frame update
+    void Start()
+    {
 
-    //    }
-              
+    }
 
-    //}
+    // Update is called once per frame
+    void Update()
+    {        
+        Touch screenTouch = Input.GetTouch(0);
+        if (screenTouch.phase == TouchPhase.Moved)
+        {
+            transform.Rotate(0f, -screenTouch.deltaPosition.x / 8, 0F);
+        }                   
+    }
 }
