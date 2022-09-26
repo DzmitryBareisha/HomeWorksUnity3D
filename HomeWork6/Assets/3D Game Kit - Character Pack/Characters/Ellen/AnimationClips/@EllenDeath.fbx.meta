@@ -687,6 +687,9 @@ ModelImporter:
   - first:
       137: 13700000
     second: Ellen_Body
+  - first:
+      74: -4013945892022372417
+    second: EllenDeath (1)
   externalObjects: {}
   materials:
     materialImportMode: 0
