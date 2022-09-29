@@ -19,20 +19,6 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &-7544145786176532218
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: c89c12426e4617e4fb9990faaef83bc5
-  m_EffectName: Attenuation
-  m_MixLevel: 3a4859f06e458c242ab6f5d116fd5975
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!244 &-6385069693315228070
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -61,25 +47,6 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!243 &-4370659453945566938
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Drips
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 24ce7bcb956bc154eaddfd7e09908d0f
-  m_Children: []
-  m_Volume: e82dcd8b2e9930b46a4a7a0c7b718e02
-  m_Pitch: 23fbb0cc893ba274eb22d5adba616a47
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: -7544145786176532218}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -101,7 +68,6 @@ AudioMixerController:
     - f714cf374b19aa442acbbea7a4b032ff
     - e06fc910bb62c8946b70974c4de63a1f
     - b860656a8d108584bba57be2d61de6a7
-    - 24ce7bcb956bc154eaddfd7e09908d0f
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -117,7 +83,6 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -8601306344854724101}
   - {fileID: 2454036181468806459}
-  - {fileID: -4370659453945566938}
   m_Volume: 599d0175cbd87ce47aa713b2b119e883
   m_Pitch: d65696a4d6711db48a6e404a314418ca
   m_Send: 00000000000000000000000000000000
@@ -158,7 +123,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Breath
+  m_Name: Effects
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: b860656a8d108584bba57be2d61de6a7
   m_Children: []
