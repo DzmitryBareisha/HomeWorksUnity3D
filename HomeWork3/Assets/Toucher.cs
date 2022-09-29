@@ -13,11 +13,11 @@ public class Toucher : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {       
         Touch screenTouch = Input.GetTouch(0);
         if (screenTouch.phase == TouchPhase.Moved)
         {
             transform.Rotate(0f, -screenTouch.deltaPosition.x / 8, 0F);
-        }                   
+        }      
     }
 }

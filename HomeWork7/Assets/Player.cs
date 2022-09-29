@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     public float speed = 0.2f;
     public float rotation;
     public float angle;
-
-    CharacterController controller;
+    
+    public CharacterController controller;
     public Camera camera;
     public CharacterController Controller { get { return controller = controller ?? GetComponent<CharacterController>(); } }
         
@@ -18,15 +18,15 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
                        
-        Vector3 movement = new Vector3(horizontal * speed, gravity, vertical * speed);                        
+        Vector3 movement = new Vector3(horizontal * speed, gravity, vertical * speed);
         Controller.Move(transform.TransformDirection(movement));
 
         rotation += Input.GetAxis("Mouse X");
         angle += Input.GetAxis("Mouse Y");
 
-        angle = Mathf.Clamp(angle, -30, 30);
+        angle = Mathf.Clamp(angle, -45, 45);
         camera.transform.rotation = Quaternion.Euler(-angle,rotation, 0f);
         this.gameObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
-
     }
+    
 }
