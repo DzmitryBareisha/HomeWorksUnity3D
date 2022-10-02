@@ -22,6 +22,10 @@ public class BackgroundMove : MonoBehaviour
         {
             ninjaflipX = !ninjaflipX;            
         }
+        if (Input.touchCount > 0)
+        {
+            ninjaflipX = !ninjaflipX;
+        }
         if (ninjaflipX == true)
         {
             newXposition = Mathf.Repeat(Time.time * -moveSpeed, offset);

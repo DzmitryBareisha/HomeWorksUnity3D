@@ -22,5 +22,9 @@ public class NinjaFlip : MonoBehaviour
             ninja.flipX = !ninja.flipX;
             //direction = -direction;            
         }        
+        if (Input.touchCount > 0)
+        {
+            ninja.flipX = !ninja.flipX;
+        }
     }
 }
