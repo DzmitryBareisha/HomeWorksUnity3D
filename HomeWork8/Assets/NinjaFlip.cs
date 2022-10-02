@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class NinjaFlip : MonoBehaviour
 {
+    //public float speed = 0.1f;
     private SpriteRenderer ninja;
+    //private Vector2 direction = new Vector2 (1f, 0f);
     // Start is called before the first frame update
     void Start()
     {
-        ninja = this.gameObject.GetComponent<SpriteRenderer>();
+        ninja = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //gameObject.transform.Translate (direction * speed * Time.deltaTime); 
         if (Input.GetKeyDown(KeyCode.Space))
         { 
-            ninja.flipX = !ninja.flipX; 
+            ninja.flipX = !ninja.flipX;
+            //direction = -direction;            
         }        
     }
 }

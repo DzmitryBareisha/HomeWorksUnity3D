@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class BackgroundMove : MonoBehaviour
 {
-    [SerializeField] Transform followingTarget;
-    [SerializeField, Range(0f, 1f)] float parallaxStrength = 0.1f;
-    [SerializeField] bool disableVerticalParalax;
-    Vector3 targetPreviousPosition;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float moveSpeed = 3f;
+    [SerializeField]
+    private float offset = 9.28f;
+    private Vector2 startPosition;
+    private float newXposition;
+    private bool ninjaflipX = true;
+    private void Start()
     {
-        if (!followingTarget)
-        {
-            followingTarget = Camera.main.transform;
-        }
-        targetPreviousPosition = followingTarget.position;
+        startPosition = transform.position;
+        //ninja = gameObject.GetComponent<SpriteRenderer>();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        var delta = followingTarget.position - targetPreviousPosition;
-        if (disableVerticalParalax)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            delta.y = 0;
+            ninjaflipX = !ninjaflipX;            
         }
-        targetPreviousPosition = followingTarget.position;
-        transform.position += delta *parallaxStrength;
+        if (ninjaflipX == true)
+        {
+            newXposition = Mathf.Repeat(Time.time * -moveSpeed, offset);
+            transform.position = startPosition + Vector2.right * newXposition;
+        }
+        if (!ninjaflipX)
+        {
+            newXposition = Mathf.Repeat(Time.time * moveSpeed, offset);
+            transform.position = startPosition + Vector2.right * newXposition;
+        }
     }
 }
