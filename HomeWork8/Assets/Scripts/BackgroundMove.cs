@@ -13,28 +13,20 @@ public class BackgroundMove : MonoBehaviour
     private bool ninjaflipX = true;
     private void Start()
     {
-        startPosition = transform.position;
-        //ninja = gameObject.GetComponent<SpriteRenderer>();
+        startPosition = transform.position;        
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ninjaflipX = !ninjaflipX;            
-        }
-        if (Input.touchCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0)
         {
             ninjaflipX = !ninjaflipX;
+            moveSpeed *= -1f;
         }
-        if (ninjaflipX == true)
-        {
-            newXposition = Mathf.Repeat(Time.time * -moveSpeed, offset);
-            transform.position = startPosition + Vector2.right * newXposition;
-        }
-        if (!ninjaflipX)
-        {
-            newXposition = Mathf.Repeat(Time.time * moveSpeed, offset);
-            transform.position = startPosition + Vector2.right * newXposition;
-        }
+        Turn();        
+    }
+    private void Turn() 
+    {
+        newXposition = Mathf.Repeat(Time.time * -moveSpeed, offset);
+        transform.position = startPosition + Vector2.right * newXposition;
     }
 }

@@ -3,58 +3,95 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
-{
-    public float speed = 5f;
-    public float jumpSpeed = 10f;
-    private float moveInput;
-    private bool isFacingRight = true;
-    private bool isGrounded;
-    public Transform feetPos;
-    public float checkRadius;
-    public LayerMask whatIsGround;
-
-    private Rigidbody2D rb;
+{     
+    [SerializeField]
+    private float speed = 3.0f;
+    [SerializeField]
+    private float jumpForce = 15.0f;
+    public bool isGrounded = false;
+    [SerializeField]
+    private Canvas canvas;
+    
+    private new Rigidbody2D rigidbody;
     private Animator animator;
-    public Rigidbody2D Rb { get { return rb = rb ?? GetComponent<Rigidbody2D>(); } }
-    public Animator CharacterAnimator { get { return animator = animator ?? GetComponent<Animator>(); } }
+    private SpriteRenderer sprite;
+    public Rigidbody2D Rigidbody { get { return rigidbody = rigidbody ?? GetComponent<Rigidbody2D>(); } }
+    public Animator CharAnimator { get { return animator = animator ?? GetComponent<Animator>(); } }
+    public SpriteRenderer Sprite { get { return sprite = sprite ?? GetComponentInChildren<SpriteRenderer>(); } }
+    private CharState State
+    {
+        get { return (CharState)CharAnimator.GetInteger("State"); }
+        set { CharAnimator.SetInteger("State", (int)value); }
+    }
+
     // Start is called before the first frame update
     void Start()
-    {       
+    {               
     }
 
+    private void FixedUpdate() 
+    { 
+        CheckGround();
+    }
     // Update is called once per frame
     void Update()
-    {
-        moveInput = Input.GetAxis("Horizontal");
-        Rb.velocity = new Vector2 (moveInput * speed, Rb.velocity.y);
-        if (isFacingRight == false && moveInput > 0)
+    {   if (!CharAnimator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
-            Flip();
-        }
-        else if (isFacingRight == true && moveInput < 0)  
-        {
-            Flip();
-        }
+            if (isGrounded)
+            {
+                State = CharState.Idle;
+            }
 
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
-        {
-            Rb.velocity = Vector2.up * jumpSpeed;
-        }
-        if (moveInput == 0)
-        {
-            CharacterAnimator.SetBool("Run", false);
-        }
-        else
-        {
-            CharacterAnimator.SetBool("Run", true);
+            if (Input.GetButton("Horizontal"))
+            {
+                Run();
+            }
+            if (isGrounded && Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
         }
     }
-    void Flip()
+    private void Run()
     {
-        isFacingRight = !isFacingRight;
-        Vector2 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
+
+        Sprite.flipX = direction.x < 0f;
+        if (isGrounded)
+        {
+            State = CharState.Run;
+        }
     }
+    private void Jump()
+    {
+        Rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);        
+    }
+    private void CheckGround() 
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.0f);
+        isGrounded = colliders.Length > 1;       
+        if (!isGrounded)
+        {
+            State = CharState.Jump;
+        }
+    }
+    public virtual void RecieveDamage()
+    {
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        Die();
+    }
+    public virtual void Die()
+    {
+        CharAnimator.SetTrigger("Die");
+        canvas.gameObject.SetActive(true);
+        Rigidbody.Sleep();
+    }
+}
+public enum CharState
+{
+    Idle,
+    Run,
+    Jump
 }
