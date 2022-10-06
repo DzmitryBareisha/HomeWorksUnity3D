@@ -5,14 +5,13 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {     
     [SerializeField]
-    private float speed = 3.0f;
+    private float speed = 4.0f;
     [SerializeField]
-    private float jumpForce = 15.0f;
+    private float jumpForce = 7.0f;
     public bool isGrounded = false;
-    [SerializeField]
-    private Canvas canvas;
-    
+        
     private new Rigidbody2D rigidbody;
+    public Vector2 direction;
     private Animator animator;
     private SpriteRenderer sprite;
     public Rigidbody2D Rigidbody { get { return rigidbody = rigidbody ?? GetComponent<Rigidbody2D>(); } }
@@ -54,9 +53,9 @@ public class CharacterController : MonoBehaviour
     }
     private void Run()
     {
-        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
-
+        direction.x = Input.GetAxis("Horizontal");
+        Rigidbody.velocity = new Vector2(direction.x * speed, Rigidbody.velocity.y);
+        
         Sprite.flipX = direction.x < 0f;
         if (isGrounded)
         {
@@ -78,15 +77,14 @@ public class CharacterController : MonoBehaviour
     }
     public virtual void RecieveDamage()
     {
-        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.velocity = Vector2.zero;
         Rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         Die();
     }
     public virtual void Die()
-    {
-        CharAnimator.SetTrigger("Die");
-        canvas.gameObject.SetActive(true);
-        Rigidbody.Sleep();
+    {        
+        Destroy(gameObject);
+        LevelManager.instance.Respawn();
     }
 }
 public enum CharState
