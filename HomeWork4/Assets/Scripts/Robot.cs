@@ -7,19 +7,19 @@ public class Robot : MonoBehaviour
     Rigidbody body;
     public float movementSpeed = 5f;
     public float rotateSpeed = 3f;
-    public Transform bullet1Pool;
-    public Transform bullet2Pool;
-    public Transform bullet3Pool;
-    int currentBulletIndex = 0;
     
-    // Start is called before the first frame update
+    public GameObject shell;
+    [SerializeField] private GameObject bullet, grenade, ball;
+    [SerializeField] private Collider stand1, stand2,stand3;
+    
     void Start()
     {
-       body = GetComponent<Rigidbody>();       
+       body = GetComponent<Rigidbody>();
+       shell = grenade;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         float sideForce = Input.GetAxis("Horizontal") * rotateSpeed;
         if (sideForce != 0f)
@@ -32,50 +32,20 @@ public class Robot : MonoBehaviour
             body.velocity = body.transform.forward * forwardForce;
         }
     }
-    private void Update()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (other == stand1)
         {
-            if (body.position.x <= -7 && body.position.z > -20)
-            {
-                Rigidbody bullet = bullet1Pool.GetChild(currentBulletIndex).GetComponent<Rigidbody>();
-                bullet.gameObject.SetActive(true);
-                bullet.position = transform.position + transform.TransformDirection(Vector3.forward);
-                bullet.velocity = Vector3.zero;
-                bullet.AddForce(transform.TransformDirection(Vector3.forward) * 10f, ForceMode.Impulse);
-                currentBulletIndex++;
-                if (currentBulletIndex >= bullet1Pool.childCount)
-                {
-                    currentBulletIndex = 0;
-                }
-            }
-            if (body.position.x > -7 && body.position.x < 9 && body.position.z > -20)
-            {
-                Rigidbody bullet = bullet2Pool.GetChild(currentBulletIndex).GetComponent<Rigidbody>();
-                bullet.gameObject.SetActive(true);
-                bullet.position = transform.position + transform.TransformDirection(Vector3.forward);
-                bullet.velocity = Vector3.zero;
-                bullet.AddForce(transform.TransformDirection(Vector3.forward) * 10f, ForceMode.VelocityChange);
-                                
-                currentBulletIndex++;
-                if (currentBulletIndex >= bullet2Pool.childCount)
-                {
-                    currentBulletIndex = 0;
-                }               
-            }
-            if (body.position.x >= 9 && body.position.z > -20)
-            {
-                Rigidbody bullet = bullet3Pool.GetChild(currentBulletIndex).GetComponent<Rigidbody>();
-                bullet.gameObject.SetActive(true);
-                bullet.position = transform.position + transform.TransformDirection(Vector3.forward);
-                bullet.velocity = Vector3.zero;
-                bullet.AddForce(transform.TransformDirection(Vector3.forward) * 10f, ForceMode.Impulse);
-                currentBulletIndex++;
-                if (currentBulletIndex >= bullet3Pool.childCount)
-                {
-                    currentBulletIndex = 0;
-                }
-            }   
+            shell = bullet;
         }
-    }
+        if (other == stand2)
+        {
+            shell = grenade;
+        }
+        if (other == stand3)
+        {
+            shell = ball;
+        }
+    }    
 }

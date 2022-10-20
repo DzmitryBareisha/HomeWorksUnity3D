@@ -5,10 +5,7 @@ using UnityEngine;
 public class BulletTrigger : MonoBehaviour
 {
     void OnTriggerExit (Collider other)
-    {
-        if (other.tag == "Bullet")
-        {
-            other.gameObject.SetActive(false);
-        }
+    {        
+        Destroy(other.gameObject);               
     }
 }

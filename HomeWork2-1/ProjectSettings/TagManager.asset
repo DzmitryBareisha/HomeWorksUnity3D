@@ -3,24 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Bullet1
-  - Bullet
-  - Stand2
-  - BulletDestroyer
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - BulletDestroyer
+  - 
   - Water
   - UI
-  - Bullet1
-  - Bullet2
-  - Bullet3
-  - Stand1
-  - Stand2
-  - Stand3
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
