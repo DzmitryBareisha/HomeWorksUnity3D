@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MovingCube : MonoBehaviour
 {
@@ -19,19 +18,12 @@ public class MovingCube : MonoBehaviour
             LastCube = GameObject.Find("StartCube").GetComponent<MovingCube>();
         }
         CurrentCube = this;
-        transform.localScale = new Vector3(LastCube.transform.localScale.x, transform.localScale.y, LastCube.transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, LastCube.transform.localScale.z);
     }
     internal void Stop()
     {
         moveSpeed = 0f;
-        float hangover = transform.position.z - LastCube.transform.position.z;
-
-        //if (Mathf.Abs(hangover) >= LastCube.transform.localScale.z)
-        //{
-        //    LastCube = null;
-        //    CurrentCube = null;
-        //    SceneManager.LoadScene(0);
-        //}
+        float hangover = transform.position.z - LastCube.transform.position.z;       
         float direction = hangover > 0 ? 1f : -1f;
         SplitCubeOnZ(hangover, direction);
         LastCube = this;
@@ -59,7 +51,7 @@ public class MovingCube : MonoBehaviour
     void Update()
     {
         transform.position += transform.forward * Time.deltaTime * moveSpeed;
-        if (transform.position.z > 3)
+        if (transform.position.z > 2.5)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -3);
         }

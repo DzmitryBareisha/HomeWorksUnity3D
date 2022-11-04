@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BulletTrigger : MonoBehaviour
 {
-    void OnTriggerExit (Collider other)
-    {        
-        Destroy(other.gameObject);               
+    void OnTriggerExit(Collider other)
+    {
+        Destroy(other.gameObject);
     }
 }
