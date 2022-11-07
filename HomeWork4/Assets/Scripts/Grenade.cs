@@ -8,7 +8,7 @@ public class Grenade : MonoBehaviour
     float force = 1000;
     [SerializeField] private float throwForce = 15f;
     Rigidbody grenade;
-        
+    [SerializeField] ParticleSystem particle;
     private void Start()
     {
         grenade = GetComponent<Rigidbody>();       
@@ -18,6 +18,9 @@ public class Grenade : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {        
         Explode();
+        var effect = Instantiate(particle, collision.contacts[0].point, Quaternion.Inverse(Quaternion.identity));
+        effect.Play();
+        Destroy(effect.gameObject, effect.main.duration);
     }
     public void Explode()
     {
