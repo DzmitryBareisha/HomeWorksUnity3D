@@ -13,7 +13,9 @@ public class Character : MonoBehaviour
     CharacterController controller;
     Animator animator;
     Camera characterCamera;
-    
+    [SerializeField] GameObject TimelineDeath;
+    [SerializeField] Transform transf;
+    [SerializeField] Camera thirdCam;
     float rotationAngle = 0.0f;
     float targetAnimationSpeed = 0.0f;
     bool isSprint = false;
@@ -21,12 +23,11 @@ public class Character : MonoBehaviour
     float speedY = 0.0f;
     float gravity = -9.81f;
     bool isJumping = false;
-    bool isAttacking = false;
+    bool isAttacking = false;    
     public CharacterController Controller { get { return controller = controller ?? GetComponent<CharacterController>(); } }
     public Camera CharacterCamera { get { return characterCamera = characterCamera ?? FindObjectOfType<Camera>(); } }
     public Animator CharacterAnimator { get { return animator = animator ?? GetComponent<Animator>(); } }
-    
-    
+        
     private void Start()
     {       
         CharacterAnimator.SetTrigger("Spawn");       
@@ -41,6 +42,9 @@ public class Character : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q)) 
             {
                 CharacterAnimator.SetTrigger("Death");
+                thirdCam.transform.position = transf.transform.position;
+                thirdCam.transform.rotation = transf.rotation;
+                TimelineDeath.SetActive(true);                
             }
             if (Input.GetMouseButtonDown(0) && !isJumping && !isAttacking)            
             {
@@ -96,6 +100,5 @@ public class Character : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(0.0f, rotationAngle, 0.0f);
             Controller.transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed);
         }
-
-    }
+    }    
 }
