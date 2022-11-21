@@ -41,41 +41,22 @@ public class Character : MonoBehaviour
             float horizontal = Input.GetAxis("Horizontal");
             if (Input.GetKeyDown(KeyCode.Q)) 
             {
-                CharacterAnimator.SetTrigger("Death");
-                thirdCam.transform.position = transf.transform.position;
-                thirdCam.transform.rotation = transf.rotation;
-                TimelineDeath.SetActive(true);                
+                Death();                
             }
             if (Input.GetMouseButtonDown(0) && !isJumping && !isAttacking)            
             {
-                isAttacking = true;
-                CharacterAnimator.SetInteger("KickIndex", Random.Range (0, 6));
-                CharacterAnimator.SetTrigger("Kicks");                
-                isAttacking = false;
+                Fight();
             }
             if (Input.GetButtonDown("Jump") && !isJumping)
             {
-                isJumping = true;
-                CharacterAnimator.SetTrigger("Jump");
-                speedY += jumpSpeed;
+                Jump();
             }
-            if (!Controller.isGrounded)
-            {
-                speedY += gravity * Time.deltaTime;
-            }
-            else if (speedY < 0.0f)
-            {
-                speedY = 0.0f;
-            }
+            IsGrounded();
+            
             CharacterAnimator.SetFloat("SpeedY", speedY / jumpSpeed);
             if (isJumping && speedY < 0.0f)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Default")))
-                {
-                    isJumping = false;
-                    CharacterAnimator.SetTrigger("Land");
-                }
+                Landing();
             }
 
             isSprint = Input.GetKey(KeyCode.LeftShift);
@@ -100,5 +81,45 @@ public class Character : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(0.0f, rotationAngle, 0.0f);
             Controller.transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed);
         }
-    }    
+    }  
+    void Death()
+    {
+        CharacterAnimator.SetTrigger("Death");
+        thirdCam.transform.position = transf.transform.position;
+        thirdCam.transform.rotation = transf.rotation;
+        TimelineDeath.SetActive(true);
+    }
+    void Fight()
+    {
+        isAttacking = true;
+        CharacterAnimator.SetInteger("KickIndex", Random.Range(0, 6));
+        CharacterAnimator.SetTrigger("Kicks");
+        isAttacking = false;
+    }
+    void Jump()
+    {
+        isJumping = true;
+        CharacterAnimator.SetTrigger("Jump");
+        speedY += jumpSpeed;
+    }
+    void IsGrounded()
+    {
+        if (!Controller.isGrounded)
+        {
+            speedY += gravity * Time.deltaTime;
+        }
+        else if (speedY < 0.0f)
+        {
+            speedY = 0.0f;
+        }
+    }
+    void Landing()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Default")))
+        {
+            isJumping = false;
+            CharacterAnimator.SetTrigger("Land");
+        }
+    }
 }

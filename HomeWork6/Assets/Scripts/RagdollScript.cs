@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class RagdollScript : MonoBehaviour
 {
-    public List<Rigidbody> elements;
+    [SerializeField] GameObject EllenRig;
+    [SerializeField] Collider[] ragdollColliders;
+    
+    [SerializeField] List<Rigidbody> elements;
+    private void Start()
+    {
+        ragdollColliders = EllenRig.GetComponentsInChildren<Collider>();
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -14,21 +21,35 @@ public class RagdollScript : MonoBehaviour
             foreach (var element in elements)
             {
                 element.isKinematic = false;
-            }            
-        }
+            }
+            foreach (Collider col in ragdollColliders)
+            {
+                col.enabled = true;
+            }
+        }        
     }
-    void OnTriggerEnter(Collider other)
-    {
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    GetComponent<Animator>().enabled = false;
+    //    GetComponent<Character>().enabled = false;
+    //    foreach (var element in elements)
+    //    {
+    //        element.isKinematic = false; 
+    //    }
+    //}
+    private void OnCollisionEnter(Collision collision)
+    {        
+        GetComponent<CapsuleCollider>().enabled = false; 
         GetComponent<Animator>().enabled = false;
         GetComponent<Character>().enabled = false;
-        foreach (var element in elements)
+        GetComponent<CharacterController>().enabled = false;
+        foreach (Collider col in ragdollColliders)
         {
-            element.isKinematic = false;              
-            //element.AddForce(other.transform.position, ForceMode.Force);
+            col.enabled = true;            
         }
-    }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    collision.rigidbody.AddForce(transform.position, ForceMode.Force);
-    //}
+        foreach (Rigidbody rigid in elements)
+        {
+            rigid.isKinematic = false;
+        }           
+    }    
 }

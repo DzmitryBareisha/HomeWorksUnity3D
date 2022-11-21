@@ -6,7 +6,7 @@ public class RagdollOnOff : MonoBehaviour
 {
     public CapsuleCollider mainCollider;
     public GameObject ThisGuysRig;
-    //public Animator ThisGuysAnimator;
+    public Animator ThisGuysAnimator;
 
     void Start()
     {
@@ -41,13 +41,13 @@ public class RagdollOnOff : MonoBehaviour
         foreach (Rigidbody rigid in limbsRigidbodies)
         {
             rigid.isKinematic = false;
-        }       
+        }
         mainCollider.enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
     }
     void RagdollModeOff()
     {
-        foreach(Collider col in ragdollColliders)
+        foreach (Collider col in ragdollColliders)
         {
             col.enabled = false;
         }
@@ -55,7 +55,7 @@ public class RagdollOnOff : MonoBehaviour
         {
             rigid.isKinematic = true;
         }
-        //ThisGuysAnimator.enabled = true;
+        ThisGuysAnimator.enabled = true;
         mainCollider.enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
     }
