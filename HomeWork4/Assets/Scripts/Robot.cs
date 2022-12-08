@@ -7,18 +7,17 @@ public class Robot : MonoBehaviour
     Rigidbody body;
     public float movementSpeed = 5f;
     public float rotateSpeed = 3f;
-    
+
     public GameObject shell;
-    [SerializeField] private GameObject bullet, grenade, ball;
-    [SerializeField] private Collider stand1, stand2,stand3;
+    [SerializeField] public GameObject bullet, grenade, ball;
+    [SerializeField] private Collider stand1, stand2, stand3;
     
     void Start()
     {
        body = GetComponent<Rigidbody>();
-       shell = grenade;
+       //shell = grenade;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float sideForce = Input.GetAxis("Horizontal") * rotateSpeed;
@@ -32,20 +31,23 @@ public class Robot : MonoBehaviour
             body.velocity = body.transform.forward * forwardForce;
         }
     }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other == stand1)
-        {
-            shell = bullet;
-        }
-        if (other == stand2)
-        {
-            shell = grenade;
-        }
-        if (other == stand3)
-        {
-            shell = ball;
-        }
-    }    
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other == stand1)
+    //    {
+    //        shell = bullet;
+    //        //BulletManager.Instance.CreatePool();
+    //    }
+    //    if (other == stand2)
+    //    {
+    //        shell = grenade;
+    //        //BulletManager.Instance.CreatePool();
+    //    }
+    //    //if (other == stand3)
+    //    //{
+    //    //    shell = ball;
+    //    //}
+        
+    //}
 }

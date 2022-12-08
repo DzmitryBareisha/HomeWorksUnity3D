@@ -14,8 +14,17 @@ public class Ball : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        var effect = Instantiate(particle, collision.contacts[0].point, Quaternion.Inverse(Quaternion.identity));
-        effect.Play();
-        Destroy(effect.gameObject, effect.main.duration);
+        if (collision.gameObject.CompareTag("Stand3"))
+        {
+            SoundManager.Instance.PlaySFX("Rebound");
+            var effect = Instantiate(particle, collision.contacts[0].point, Quaternion.Inverse(Quaternion.identity));
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }            
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            gameObject.SetActive(false);
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        }
     }
 }

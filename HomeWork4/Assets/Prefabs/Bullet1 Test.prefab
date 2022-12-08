@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 7058653669842116196}
   - component: {fileID: 4866782644940535949}
   - component: {fileID: 6183611818941285744}
-  - component: {fileID: -2502926929770166846}
   - component: {fileID: 1565469084878841414}
+  - component: {fileID: 3331916677975293325}
   m_Layer: 14
-  m_Name: Bullet1
+  m_Name: Bullet1 Test
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,20 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &-2502926929770166846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3487898211904574533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05bd7a7efb2763f4ab2ce1ec343f74be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  particle: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
 --- !u!96 &1565469084878841414
 TrailRenderer:
   serializedVersion: 2
@@ -172,7 +158,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -181,7 +167,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5087719
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -220,12 +206,26 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
+    numCornerVertices: 1
+    numCapVertices: 1
     alignment: 0
     textureMode: 0
-    shadowBias: 0.5
+    shadowBias: 0.1
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.05
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &3331916677975293325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487898211904574533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d35576789be91e64b97749059c4c9948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  particle: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Shootable
   - Bullet
+  - Stand2
+  - Stand1
+  - Ground
+  - Stand3
   layers:
   - Default
   - TransparentFX

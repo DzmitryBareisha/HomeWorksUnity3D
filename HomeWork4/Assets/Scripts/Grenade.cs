@@ -9,18 +9,24 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float throwForce = 15f;
     Rigidbody grenade;
     [SerializeField] ParticleSystem particle;
-    private void Start()
+    public void Start()
     {
-        grenade = GetComponent<Rigidbody>();       
+        grenade = GetComponent<Rigidbody>();
         grenade.AddForce((transform.forward + transform.up) * throwForce, ForceMode.VelocityChange);
     }
         
     public void OnCollisionEnter(Collision collision)
-    {        
-        Explode();
-        var effect = Instantiate(particle, collision.contacts[0].point, Quaternion.Inverse(Quaternion.identity));
-        effect.Play();
-        Destroy(effect.gameObject, effect.main.duration);
+    {
+        if (collision.gameObject.CompareTag("Stand2"))
+        {
+            SoundManager.Instance.PlaySFX("Explosion");
+            Explode();
+            var effect = Instantiate(particle, collision.contacts[0].point, Quaternion.Inverse(Quaternion.identity));
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }
+        gameObject.SetActive(false);
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
     public void Explode()
     {
@@ -32,7 +38,8 @@ public class Grenade : MonoBehaviour
             {
                 rigidbody.AddExplosionForce(force, transform.position, radius);
             }
-        }
-        Destroy(gameObject);
-    }
+        }        
+        gameObject.SetActive(false);
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    }    
 }
